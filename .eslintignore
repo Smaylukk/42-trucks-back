@@ -1,0 +1,12 @@
+node_modules/
+tests/
+.idea/
+.vscode/
+*.lock
+.eslintignore
+.gitignore
+.prettierignore
+README.md
+*.json
+dist/
+/coverage/

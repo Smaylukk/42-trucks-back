@@ -1,0 +1,83 @@
+import { Schema, model, Document } from 'mongoose'
+
+export interface UserDocument extends Document {
+  name: string
+  email: string
+  password: string
+}
+const userSchema = new Schema<UserDocument>({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  password: { type: String, required: true },
+})
+const UserModel = model<UserDocument>('User', userSchema)
+
+export interface CarDocument extends Document {
+  name: string
+  number: string
+  militaryBase: string
+  carName: string
+  status: string
+  amountTires: number
+  amountDyeing: number
+  amountRepair: number
+  addEquip: string
+  active: boolean
+  pictures: string[]
+  sponsors: string[]
+}
+const carSchema = new Schema<CarDocument>({
+  name: { type: String, required: true },
+  number: { type: String, required: true },
+  militaryBase: { type: String },
+  carName: { type: String },
+  status: { type: String },
+  amountTires: { type: Number },
+  amountDyeing: { type: Number },
+  amountRepair: { type: Number },
+  addEquip: { type: String },
+  active: { type: Boolean },
+  pictures: [{ type: String }],
+  sponsors: [{ type: Schema.Types.ObjectId, ref: 'Sponsor' }],
+})
+carSchema.set('toJSON', {
+  virtuals: true,
+  transform: (doc, ret) => {
+    // Перетворити _id в id
+    /* eslint-disable */
+    ret.id = ret._id
+    delete ret._id
+    /* eslint-enable */
+    return ret
+  },
+})
+const CarModel = model<CarDocument>('Car', carSchema)
+
+export interface SponsorDocument extends Document {
+  name: string
+  description: string
+  picture: string
+  url: string
+  active: boolean
+}
+const sponsorSchema = new Schema<SponsorDocument>({
+  name: { type: String, required: true },
+  description: { type: String },
+  picture: { type: String },
+  url: { type: String },
+  active: { type: Boolean },
+})
+sponsorSchema.set('toJSON', {
+  virtuals: true,
+  transform: (doc, ret) => {
+    // Перетворити _id в id
+    /* eslint-disable */
+    ret.id = ret._id
+    delete ret._id
+    /* eslint-enable */
+    return ret
+  },
+})
+const SponsorModel = model<SponsorDocument>('Sponsor', sponsorSchema)
+
+export { UserModel, CarModel, SponsorModel }
