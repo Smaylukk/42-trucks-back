@@ -1,5 +1,6 @@
 import { Schema, model, Document } from 'mongoose'
 
+// USER
 export interface UserDocument extends Document {
   name: string
   email: string
@@ -10,8 +11,20 @@ const userSchema = new Schema<UserDocument>({
   email: { type: String, required: true },
   password: { type: String, required: true },
 })
+userSchema.set('toJSON', {
+  virtuals: true,
+  transform: (doc, ret) => {
+    // Перетворити _id в id
+    /* eslint-disable */
+    ret.id = ret._id
+    delete ret._id
+    /* eslint-enable */
+    return ret
+  },
+})
 const UserModel = model<UserDocument>('User', userSchema)
 
+// CAR
 export interface CarDocument extends Document {
   name: string
   number: string
@@ -22,6 +35,7 @@ export interface CarDocument extends Document {
   amountDyeing: number
   amountRepair: number
   addEquip: string
+  description: string
   active: boolean
   pictures: string[]
   sponsors: string[]
@@ -37,6 +51,7 @@ const carSchema = new Schema<CarDocument>({
   amountRepair: { type: Number },
   addEquip: { type: String },
   active: { type: Boolean },
+  description: { type: String },
   pictures: [{ type: String }],
   sponsors: [{ type: Schema.Types.ObjectId, ref: 'Sponsor' }],
 })
@@ -53,6 +68,7 @@ carSchema.set('toJSON', {
 })
 const CarModel = model<CarDocument>('Car', carSchema)
 
+// SPONSOR
 export interface SponsorDocument extends Document {
   name: string
   description: string

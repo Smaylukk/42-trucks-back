@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { body } from 'express-validator'
 import todoController from '../controllers/carController'
-import authMiddleware from '../middlewares/authMiddleware';
+import authMiddleware from '../middlewares/authMiddleware'
 
 const router = Router()
 
@@ -16,6 +16,7 @@ router.post(
 )
 router.put('/:id', authMiddleware, todoController.update)
 router.get('/', todoController.getAll)
+router.get('/active', todoController.getAllActiveCar)
 router.get('/:id', todoController.getOne)
 router.delete('/:id', authMiddleware, todoController.delete)
 

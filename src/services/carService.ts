@@ -1,10 +1,14 @@
 import CarRepository from '../repositories/carRepository'
-import { CarDocument } from '../models/model';
-import userRepository from '../repositories/userRepository';
+import { CarDocument } from '../models/model'
+import userRepository from '../repositories/userRepository'
 
 class CarService {
   async getAllCars() {
     return CarRepository.getAll()
+  }
+
+  async getAllActiveCar() {
+    return CarRepository.getAllActiveCar()
   }
 
   async getOneCar(id: string) {

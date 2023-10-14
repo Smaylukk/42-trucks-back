@@ -15,6 +15,17 @@ class CarController {
     }
   }
 
+  async getAllActiveCar(req: Request, res: Response, next: NextFunction) {
+    try {
+      const cars = await CarService.getAllActiveCar()
+
+      return res.status(200).json(cars)
+    } catch (error) {
+      const mes = error.message + error.messages.join(', ')
+      next(ApiError.badRequestError(mes))
+    }
+  }
+
   async getOne(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params

@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt'
 import jwtService from './jwtService'
 import ApiError from '../errors/ApiError'
 import UserRepository from '../repositories/userRepository'
-import { UserDocument } from '../models/model';
+import { UserDocument } from '../models/model'
 
 class AuthService {
   async registration(email: string, name: string, password: string) {
@@ -10,7 +10,8 @@ class AuthService {
     if (existUser) {
       throw ApiError.badRequestError(`Користувач з email ${email} вже зареєстрований`)
     }
-    const user = await UserRepository.createUser({ email, name, password })
+    const hashPass = bcrypt.hashSync(password, 5)
+    const user = await UserRepository.createUser({ email, name, password: hashPass })
 
     const payload = {
       id: user.id,

@@ -1,15 +1,14 @@
 import { Router } from 'express'
 import { body } from 'express-validator'
-import userController from '../controllers/userController'
 import authMiddleware from '../middlewares/authMiddleware'
+import userController from '../controllers/userController'
 
 const router = Router()
 
 router.post(
   '/reg',
   [
-    body('email').notEmpty().withMessage('Email обовязковий').isEmail()
-      .withMessage('Email має бути email-формат'),
+    body('email').notEmpty().withMessage('Email обовязковий').isEmail().withMessage('Email має бути email-формат'),
     body('name').notEmpty().withMessage('Найменування обовязкове'),
     body('password')
       .notEmpty()
@@ -26,5 +25,11 @@ router.post(
   userController.login,
 )
 router.get('/auth', authMiddleware, userController.check)
+
+router.post('/', authMiddleware, userController.create)
+router.put('/:id', authMiddleware, userController.update)
+router.get('/', authMiddleware, userController.getAll)
+router.get('/:id', authMiddleware, userController.getOne)
+router.delete('/:id', authMiddleware, userController.delete)
 
 export default router
