@@ -28,6 +28,7 @@ const UserModel = model<UserDocument>('User', userSchema)
 export interface CarDocument extends Document {
   name: string
   number: string
+  numberSort: number
   militaryBase: string
   carName: string
   status: string
@@ -43,6 +44,7 @@ export interface CarDocument extends Document {
 const carSchema = new Schema<CarDocument>({
   name: { type: String, required: true },
   number: { type: String, required: true },
+  numberSort: { type: Number, required: true, min: 0 },
   militaryBase: { type: String },
   carName: { type: String },
   status: { type: String },
