@@ -13,7 +13,7 @@ class CarRepository {
 
   // Знайти всі активні автомобілі
   async getAllActiveCar(): Promise<CarDocument[]> {
-    return CarModel.find({ active: true }).exec()
+    return CarModel.find({ active: true }).sort({ number: 1 }).exec()
   }
 
   // Знайти автомобіль за ідентифікатором
