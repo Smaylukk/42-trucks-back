@@ -8,7 +8,7 @@ class CarRepository {
 
   // Знайти всі автомобілі
   async getAll(): Promise<CarDocument[]> {
-    return CarModel.find().exec()
+    return CarModel.find().sort({ numberSort: 1 }).exec()
   }
 
   // Знайти всі активні автомобілі
