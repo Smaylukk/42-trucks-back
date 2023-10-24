@@ -5,6 +5,7 @@ import multer from 'multer'
 import morgan from 'morgan'
 import fs from 'fs'
 import path from 'path'
+import qt from '@wahyuade/quickthumb'
 import { ServerConfig } from './config/config'
 import router from './routes/index'
 import errorMiddleware from './middlewares/errorMiddleware'
@@ -25,8 +26,14 @@ app
   .use(
     '/static',
     express.static(
-      'static',
+      path.resolve(__dirname, '..', 'static'),
       { setHeaders: (res) => { res.setHeader('Content-type', 'image') } },
+    ),
+  )
+  .use(
+    '/thumb',
+    qt.static(
+      path.resolve(__dirname, '..', 'static'),
     ),
   )
   .use(errorMiddleware)
