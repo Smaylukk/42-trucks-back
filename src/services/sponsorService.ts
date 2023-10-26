@@ -9,6 +9,10 @@ class SponsorService {
     return SponsorRepository.getAll()
   }
 
+  async getAllActiveSponsors() {
+    return SponsorRepository.getAllActive()
+  }
+
   async getOneSponsor(id: string) {
     return SponsorRepository.getOne(id)
   }

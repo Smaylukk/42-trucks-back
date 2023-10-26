@@ -10,8 +10,17 @@ class SponsorController {
 
       return res.status(200).json(sponsors)
     } catch (error) {
-      const mes = error.message + error.messages.join(', ')
-      next(ApiError.badRequestError(mes))
+      next(ApiError.badRequestError(error.message))
+    }
+  }
+
+  async getAllActive(req: Request, res: Response, next: NextFunction) {
+    try {
+      const sponsors = await SponsorService.getAllActiveSponsors()
+
+      return res.status(200).json(sponsors)
+    } catch (error) {
+      next(ApiError.badRequestError(error.message))
     }
   }
 
