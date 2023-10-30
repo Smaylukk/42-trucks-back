@@ -38,6 +38,18 @@ class CarService {
     }
     return null
   }
+
+  async getPrevCar(id: string) {
+    const car = await CarRepository.getOne(id)
+
+    return CarRepository.getPrevCarByNumber(car.numberSort)
+  }
+
+  async getNextCar(id: string) {
+    const car = await CarRepository.getOne(id)
+
+    return CarRepository.getNextCarByNumber(car.numberSort)
+  }
 }
 
 export default new CarService()

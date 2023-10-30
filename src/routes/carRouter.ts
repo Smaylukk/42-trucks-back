@@ -19,5 +19,7 @@ router.get('/', todoController.getAll)
 router.get('/active', todoController.getAllActiveCar)
 router.get('/:id', todoController.getOne)
 router.delete('/:id', authMiddleware, todoController.delete)
+router.get('/prev/:id', todoController.getPrev)
+router.get('/next/:id', todoController.getNext)
 
 export default router

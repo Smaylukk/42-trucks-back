@@ -72,6 +72,34 @@ class CarController {
       next(ApiError.badRequestError(error.message))
     }
   }
+
+  async getPrev(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params
+      const prevCar = await CarService.getPrevCar(id)
+
+      if (prevCar) {
+        return res.status(200).json({ id: prevCar.id, number: prevCar.number })
+      }
+      return res.status(200).json({ id: null, number: null })
+    } catch (error) {
+      next(ApiError.badRequestError(error.message))
+    }
+  }
+
+  async getNext(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params
+      const nextCar = await CarService.getNextCar(id)
+
+      if (nextCar) {
+        return res.status(200).json({ id: nextCar.id, number: nextCar.number })
+      }
+      return res.status(200).json({ id: null, number: null })
+    } catch (error) {
+      next(ApiError.badRequestError(error.message))
+    }
+  }
 }
 
 export default new CarController()

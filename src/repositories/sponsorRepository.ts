@@ -42,7 +42,6 @@ class SponsorRepository {
       })
       .project({ _id: 0, id: '$_id', name: 1, description: 1, picture: 1, url: 1, active: 1, cars: 1 })
       .exec()
-    console.log(sponsors)
     return sponsors[0] ?? null
   }
 

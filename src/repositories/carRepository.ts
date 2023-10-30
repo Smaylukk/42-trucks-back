@@ -30,6 +30,20 @@ class CarRepository {
   async delete(id: string): Promise<CarDocument | null> {
     return CarModel.findByIdAndDelete(id).exec()
   }
+
+  // Знайти попередній автомобіль за ідентифікатором
+  async getPrevCarByNumber(number: number): Promise<CarDocument | null> {
+    return CarModel.findOne({ numberSort: { $lt: number } })
+      .sort({ numberSort: -1 })
+      .exec()
+  }
+
+  // Знайти наступний автомобіль за ідентифікатором
+  async getNextCarByNumber(number: number): Promise<CarDocument | null> {
+    return CarModel.findOne({ numberSort: { $gt: number } })
+      .sort({ numberSort: 1 })
+      .exec()
+  }
 }
 
 export default new CarRepository()
