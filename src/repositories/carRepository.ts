@@ -7,13 +7,13 @@ class CarRepository {
   }
 
   // Знайти всі автомобілі
-  async getAll(): Promise<CarDocument[]> {
-    return CarModel.find().sort({ numberSort: 1 }).exec()
+  async getAll(isRepair: boolean): Promise<CarDocument[]> {
+    return CarModel.find({ isRepair }).sort({ numberSort: 1 }).exec()
   }
 
   // Знайти всі активні автомобілі
-  async getAllActiveCar(): Promise<CarDocument[]> {
-    return CarModel.find({ active: true }).sort({ numberSort: 1 }).exec()
+  async getAllActiveCar(isRepair: boolean): Promise<CarDocument[]> {
+    return CarModel.find({ active: true, isRepair }).sort({ numberSort: 1 }).exec()
   }
 
   // Знайти автомобіль за ідентифікатором
@@ -43,6 +43,14 @@ class CarRepository {
     return CarModel.findOne({ numberSort: { $gt: number } })
       .sort({ numberSort: 1 })
       .exec()
+  }
+
+  async updateDatabase() {
+    const result = await CarModel.updateMany({ isRepair: { $exists: false } }, { isRepair: false }).exec()
+    console.log(`Set "isRepair" in ${result.modifiedCount}`)
+
+    const resultColor = await CarModel.updateMany({ color: { $exists: false } }, { color: '' }).exec()
+    console.log(`Set "color" in ${resultColor.modifiedCount}`)
   }
 }
 

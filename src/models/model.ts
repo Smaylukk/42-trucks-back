@@ -38,6 +38,8 @@ export interface CarDocument extends Document {
   addEquip: string
   description: string
   active: boolean
+  color: string
+  isRepair: boolean
   pictures: string[]
   sponsors: string[]
 }
@@ -54,6 +56,8 @@ const carSchema = new Schema<CarDocument>({
   addEquip: { type: String },
   active: { type: Boolean },
   description: { type: String },
+  color: { type: String },
+  isRepair: { type: Boolean },
   pictures: [{ type: String }],
   sponsors: [{ type: Schema.Types.ObjectId, ref: 'Sponsor' }],
 })

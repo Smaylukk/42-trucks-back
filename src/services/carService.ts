@@ -3,12 +3,12 @@ import { CarDocument } from '../models/model'
 import userRepository from '../repositories/userRepository'
 
 class CarService {
-  async getAllCars() {
-    return CarRepository.getAll()
+  async getAllCars(isRepair: boolean) {
+    return CarRepository.getAll(isRepair)
   }
 
-  async getAllActiveCar() {
-    return CarRepository.getAllActiveCar()
+  async getAllActiveCar(isRepair: boolean) {
+    return CarRepository.getAllActiveCar(isRepair)
   }
 
   async getOneCar(id: string) {
@@ -49,6 +49,10 @@ class CarService {
     const car = await CarRepository.getOne(id)
 
     return CarRepository.getNextCarByNumber(car.numberSort)
+  }
+
+  async updateDatabase() {
+    await CarRepository.updateDatabase()
   }
 }
 

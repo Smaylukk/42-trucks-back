@@ -1,6 +1,6 @@
 {
   "name": "42-trucks-vackend",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "description": "Серверна частина для проекту '42 тачки на ЗСУ'",
   "main": "index.js",
   "scripts": {
