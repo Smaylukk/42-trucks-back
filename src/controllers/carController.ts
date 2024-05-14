@@ -59,6 +59,17 @@ class CarController {
     }
   }
 
+  async getOneAdmin(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params
+      const car = await CarService.getOneCarAdmin(id)
+
+      return res.status(200).json(car)
+    } catch (error) {
+      next(ApiError.badRequestError(error.message))
+    }
+  }
+
   async create(req: Request, res: Response, next: NextFunction) {
     try {
       checkValidationError(req)

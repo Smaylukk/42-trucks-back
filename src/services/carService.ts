@@ -15,6 +15,10 @@ class CarService {
     return CarRepository.getOne(id)
   }
 
+  async getOneCarAdmin(id: string) {
+    return CarRepository.getOneAdmin(id)
+  }
+
   async createCar(userId: string, data: CarDocument) {
     const user = userRepository.getOneUser(userId)
     if (user) {

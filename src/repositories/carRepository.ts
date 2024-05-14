@@ -13,11 +13,19 @@ class CarRepository {
 
   // Знайти всі активні автомобілі
   async getAllActiveCar(isRepair: boolean): Promise<CarDocument[]> {
-    return CarModel.find({ active: true, isRepair }).sort({ numberSort: 1 }).exec()
+    return CarModel.find({ active: true, isRepair })
+      .select('-contactName -contactPhone -contactEmail')
+      .sort({ numberSort: 1 })
+      .exec()
   }
 
   // Знайти автомобіль за ідентифікатором
   async getOne(id: string): Promise<CarDocument | null> {
+    return CarModel.findById(id).select('-contactName -contactPhone -contactEmail').exec()
+  }
+
+  // Знайти автомобіль за ідентифікатором
+  async getOneAdmin(id: string): Promise<CarDocument | null> {
     return CarModel.findById(id).exec()
   }
 
@@ -47,10 +55,35 @@ class CarRepository {
 
   async updateDatabase() {
     const result = await CarModel.updateMany({ isRepair: { $exists: false } }, { isRepair: false }).exec()
-    console.log(`Set "isRepair" in ${result.modifiedCount}`)
+    if (result.modifiedCount) {
+      console.log(`Set "isRepair" in ${result.modifiedCount}`)
+    }
 
     const resultColor = await CarModel.updateMany({ color: { $exists: false } }, { color: '' }).exec()
-    console.log(`Set "color" in ${resultColor.modifiedCount}`)
+    if (resultColor.modifiedCount) {
+      console.log(`Set "color" in ${resultColor.modifiedCount}`)
+    }
+
+    const resultContactName = await CarModel.updateMany({ contactName: { $exists: false } }, { contactName: '' }).exec()
+    if (resultContactName.modifiedCount) {
+      console.log(`Set "Contact name" in ${resultContactName.modifiedCount}`)
+    }
+
+    const resultContactPhone = await CarModel.updateMany(
+      { contactPhone: { $exists: false } },
+      { contactPhone: '' },
+    ).exec()
+    if (resultContactPhone.modifiedCount) {
+      console.log(`Set "Contact phone" in ${resultContactPhone.modifiedCount}`)
+    }
+
+    const resultContactEmail = await CarModel.updateMany(
+      { contactEmail: { $exists: false } },
+      { contactEmail: '' },
+    ).exec()
+    if (resultContactEmail.modifiedCount) {
+      console.log(`Set "Contact name" in ${resultContactEmail.modifiedCount}`)
+    }
   }
 }
 
