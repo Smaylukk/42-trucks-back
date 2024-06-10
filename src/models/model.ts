@@ -108,4 +108,26 @@ sponsorSchema.set('toJSON', {
 })
 const SponsorModel = model<SponsorDocument>('Sponsor', sponsorSchema)
 
-export { UserModel, CarModel, SponsorModel }
+// GRATITUDE
+export interface GratitudeDocument extends Document {
+  url: string
+  description: string
+}
+const gratitudeSchema = new Schema<GratitudeDocument>({
+  url: { type: String },
+  description: { type: String },
+})
+gratitudeSchema.set('toJSON', {
+  virtuals: true,
+  transform: (doc, ret) => {
+    // Перетворити _id в id
+    /* eslint-disable */
+    ret.id = ret._id
+    delete ret._id
+    /* eslint-enable */
+    return ret
+  },
+})
+const GratitudeModel = model<SponsorDocument>('Gratitude', gratitudeSchema)
+
+export { UserModel, CarModel, SponsorModel, GratitudeModel }
