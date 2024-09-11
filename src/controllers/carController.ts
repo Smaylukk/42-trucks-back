@@ -2,11 +2,12 @@ import { NextFunction, Request, Response } from 'express'
 import ApiError from '../errors/ApiError'
 import CarService from '../services/carService'
 import { checkValidationError } from '../validation/validation'
+import { ECarType } from '../models/model'
 
 class CarController {
   async getAll(req: Request, res: Response, next: NextFunction) {
     try {
-      const cars = await CarService.getAllCars(false)
+      const cars = await CarService.getAllCars()
 
       return res.status(200).json(cars)
     } catch (error) {
@@ -17,18 +18,7 @@ class CarController {
 
   async getAllActiveCar(req: Request, res: Response, next: NextFunction) {
     try {
-      const cars = await CarService.getAllActiveCar(false)
-
-      return res.status(200).json(cars)
-    } catch (error) {
-      const mes = error.message + error.messages.join(', ')
-      next(ApiError.badRequestError(mes))
-    }
-  }
-
-  async getAllRepair(req: Request, res: Response, next: NextFunction) {
-    try {
-      const cars = await CarService.getAllCars(true)
+      const cars = await CarService.getAllActiveCar(ECarType.car)
 
       return res.status(200).json(cars)
     } catch (error) {
@@ -39,7 +29,18 @@ class CarController {
 
   async getAllActiveRepairCar(req: Request, res: Response, next: NextFunction) {
     try {
-      const cars = await CarService.getAllActiveCar(true)
+      const cars = await CarService.getAllActiveCar(ECarType.repair)
+
+      return res.status(200).json(cars)
+    } catch (error) {
+      const mes = error.message + error.messages.join(', ')
+      next(ApiError.badRequestError(mes))
+    }
+  }
+
+  async getAllActiveZombieCar(req: Request, res: Response, next: NextFunction) {
+    try {
+      const cars = await CarService.getAllActiveCar(ECarType.zombie)
 
       return res.status(200).json(cars)
     } catch (error) {

@@ -3,12 +3,12 @@ import { CarDocument } from '../models/model'
 import userRepository from '../repositories/userRepository'
 
 class CarService {
-  async getAllCars(isRepair: boolean) {
-    return CarRepository.getAll(isRepair)
+  async getAllCars() {
+    return CarRepository.getAll()
   }
 
-  async getAllActiveCar(isRepair: boolean) {
-    return CarRepository.getAllActiveCar(isRepair)
+  async getAllActiveCar(carType: number) {
+    return CarRepository.getAllActiveCar(carType)
   }
 
   async getOneCar(id: string) {

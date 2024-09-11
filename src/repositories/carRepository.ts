@@ -1,4 +1,4 @@
-import { CarDocument, CarModel } from '../models/model'
+import { CarDocument, CarModel, ECarType } from '../models/model'
 
 class CarRepository {
   async create(carData: Partial<CarDocument>): Promise<CarDocument> {
@@ -7,13 +7,13 @@ class CarRepository {
   }
 
   // Знайти всі автомобілі
-  async getAll(isRepair: boolean): Promise<CarDocument[]> {
-    return CarModel.find({ isRepair }).sort({ numberSort: 1 }).exec()
+  async getAll(): Promise<CarDocument[]> {
+    return CarModel.find().sort({ numberSort: 1 }).exec()
   }
 
   // Знайти всі активні автомобілі
-  async getAllActiveCar(isRepair: boolean): Promise<CarDocument[]> {
-    return CarModel.find({ active: true, isRepair })
+  async getAllActiveCar(carType: number): Promise<CarDocument[]> {
+    return CarModel.find({ active: true, carType })
       .select('-contactName -contactPhone -contactEmail')
       .sort({ numberSort: 1 })
       .exec()
@@ -54,6 +54,12 @@ class CarRepository {
   }
 
   async updateDatabase() {
+    await this.updateCarProps()
+
+    await this.updateCarType()
+  }
+
+  async updateCarProps() {
     const result = await CarModel.updateMany({ isRepair: { $exists: false } }, { isRepair: false }).exec()
     if (result.modifiedCount) {
       console.log(`Set "isRepair" in ${result.modifiedCount}`)
@@ -83,6 +89,18 @@ class CarRepository {
     ).exec()
     if (resultContactEmail.modifiedCount) {
       console.log(`Set "Contact name" in ${resultContactEmail.modifiedCount}`)
+    }
+  }
+
+  async updateCarType() {
+    const result = await CarModel.updateMany({ isRepair: true }, { carType: ECarType.repair }).exec()
+    if (result.modifiedCount) {
+      console.log(`Set "Car type = Repair" in ${result.modifiedCount}`)
+    }
+
+    const resultCars = await CarModel.updateMany({ carType: { $exists: false } }, { carType: ECarType.car }).exec()
+    if (resultCars.modifiedCount) {
+      console.log(`Set "Car type = Car" in ${resultCars.modifiedCount}`)
     }
   }
 }
