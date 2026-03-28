@@ -3,17 +3,25 @@ import cors from 'cors'
 import * as http from 'http'
 import multer from 'multer'
 import morgan from 'morgan'
-import fs from 'fs'
 import path from 'path'
-import qt from '@wahyuade/quickthumb'
+import { createStream } from 'rotating-file-stream'
 import { ServerConfig } from './config/config'
 import router from './routes/index'
 import errorMiddleware from './middlewares/errorMiddleware'
+import thumbnailMiddleware from './middlewares/thumbnailMiddleware'
 import { connectDb } from './services/dbConnector'
 
 const app: Express = express()
 const upload = multer({ dest: 'static' })
-const accessLogStream = fs.createWriteStream(path.join('log', 'access.log'), { flags: 'a' })
+
+// Налаштування ротації логів: щоденна ротація, максимум 10 файлів
+const accessLogStream = createStream('access.log', {
+  size: '10M', // ротація при досягненні 10 МБ
+  interval: '1d', // ротація щодня
+  maxFiles: 10, // зберігати останні 10 файлів
+  path: path.join('log'),
+  compress: 'gzip', // стискати старі логи
+})
 
 // prettier-ignore
 app
@@ -30,12 +38,7 @@ app
       { setHeaders: (res) => { res.setHeader('Content-type', 'image') } },
     ),
   )
-  .use(
-    '/thumb',
-    qt.static(
-      path.resolve(__dirname, '..', 'static'),
-    ),
-  )
+  .use('/thumb/*', thumbnailMiddleware)
   .use(errorMiddleware)
 export const server = http.createServer(app)
 

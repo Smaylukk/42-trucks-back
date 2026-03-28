@@ -1,8 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import path from 'path'
-import fs from 'fs'
 import ApiError from '../errors/ApiError'
-import GratitudeService from '../services/gratitudeService'
 import HtmlTextService from '../services/htmlTextService'
 
 class HtmlTextController {

@@ -7,20 +7,15 @@
     "noImplicitAny": false,
     "moduleResolution": "node",
     "sourceMap": false,
+    "rootDir": "src",
     "outDir": "dist",
     "baseUrl": ".",
     "allowUnusedLabels": false,
     "paths": {
       "*": ["node_modules/*", "src/types/*"]
     },
-    "lib": [
-      "ES2015"
-    ]
+    "lib": ["ES2015"]
   },
   "include": ["src"],
-  "exclude": [
-    "tests",
-    "node_modules",
-    "dist"
-  ]
+  "exclude": ["tests", "node_modules", "dist"]
 }

@@ -1,4 +1,4 @@
-import { HtmlTextDocument, HtmlTextModel } from '../models/model'
+import { HtmlTextDocument } from '../models/model'
 import htmlTextRepository from '../repositories/htmlTextRepository'
 
 class HtmlTextService {

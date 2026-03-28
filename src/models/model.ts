@@ -19,6 +19,7 @@ export enum ECarType {
 }
 // USER
 export interface UserDocument extends Document {
+  id: string
   name: string
   email: string
   password: string
@@ -36,6 +37,7 @@ const UserModel = model<UserDocument>('User', userSchema)
 
 // CAR
 export interface CarDocument extends Document {
+  id: string
   name: string
   number: string
   numberSort: number

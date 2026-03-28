@@ -23,7 +23,7 @@ class UserRepository {
   }
 
   async updateUser(id: string, data: Partial<UserDocument>): Promise<UserDocument | null> {
-    return UserModel.findByIdAndUpdate(id, data, { new: true }).exec();
+    return UserModel.findByIdAndUpdate(id, data, { new: true }).exec()
   }
 
   async deleteUser(id: string): Promise<UserDocument | null> {

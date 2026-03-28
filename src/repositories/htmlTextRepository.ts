@@ -1,4 +1,4 @@
-import { CarModel, HtmlTextDocument, HtmlTextModel } from '../models/model'
+import { HtmlTextDocument, HtmlTextModel } from '../models/model'
 
 class HtmlTextRepository {
   async getAll(): Promise<HtmlTextDocument[]> {

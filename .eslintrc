@@ -1,14 +1,10 @@
 {
-  "extends": [
-    "airbnb-base",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/typescript"
-  ],
+  "extends": ["airbnb-base", "plugin:@typescript-eslint/recommended", "plugin:import/typescript"],
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "import"],
   "parserOptions": {
     "ecmaVersion": 2021,
-    "sourceType": "module"
+    "sourceType": "module",
   },
   "rules": {
     "import/extensions": [
@@ -18,8 +14,8 @@
         "js": "never",
         "jsx": "never",
         "ts": "never",
-        "tsx": "never"
-      }
+        "tsx": "never",
+      },
     ],
     "new-cap": "off",
     "semi": "off",
@@ -36,6 +32,8 @@
     "import/no-unresolved": "off",
     "newline-per-chained-call": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "import/no-extraneous-dependencies": "off"
-  }
+    "import/no-extraneous-dependencies": "off",
+    "linebreak-style": "off",
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 1 }],
+  },
 }
